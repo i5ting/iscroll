@@ -274,29 +274,48 @@ function IScroll (el, options) {
 	}
 	//new add  
 	
+	//window.onorientationchange = this.orientationChange();
+		
 	if(this.wrapper.getElementsByTagName('li').length === 0){	
 		this.plog('WARNING: wrapper>scroller>ul>li length is 0,please add li as item');
 		return;
 	}
 	
-
 	if(this.options.item_width != '100%'){
 		for(var o = 0;o < this.wrapper.getElementsByTagName('li').length;o++){
 			this.plog(o);
 			this.plog(this.wrapper.getElementsByTagName('li')[o]);
 			this.plog(this.options.item_width);
-			this.wrapper.getElementsByTagName('li')[o].style.width = this.options.item_width;
+
+			if(this.contain(this.options.item_width,'%')){
+				// var aw = parseInt(this.options.item_width)*window.screen.width*0.01;
+				//this.wrapper.getElementsByTagName('li')[o].style.width = aw + 'px';
+				var aw = 100/this.wrapper.getElementsByTagName('li').length+ '%';
+				this.wrapper.getElementsByTagName('li')[o].style.width = aw;	
+			}else{
+				this.wrapper.getElementsByTagName('li')[o].style.width = this.options.item_width;				
+			}
+			
 		}
 	}
 	
 	if(this.options.wrapper_width != '100%'){
-			this.wrapper.style.width = this.options.wrapper_width;
+		this.wrapper.style.width = this.options.wrapper_width;
 	}else{
 		this.wrapper.style.width = this.options.item_width;
 	}
 	
 	if(this.options.type == 'carousel'){
+		if(this.contain(this.options.item_width,'%')){
+			this.plog('window.screen.width='+window.screen.width);
+			this.plog('this.options.item_width='+this.options.item_width);
+	
+			// this.scroller.style.width = parseInt(this.options.item_width)*this.wrapper.getElementsByTagName('li').length+'px';
+			this.scroller.style.width = this.wrapper.getElementsByTagName('li').length*100+'%';
+		}else{
 			this.scroller.style.width = parseInt(this.options.item_width)*this.wrapper.getElementsByTagName('li').length+'px';
+		}
+			
 			
 			if(this.options.debug){
 				this.plog(this.wrapper.innerHTML);
@@ -848,6 +867,8 @@ IScroll.prototype = {
 			this.scrollerStyle.top = y + 'px';
 		}
 
+		this.plog('&&&& this.x ='+	this.x + ' and x='+	x);
+
 		this.x = x;
 		this.y = y;
 
@@ -918,6 +939,27 @@ IScroll.prototype = {
 	},
 	pp:function(type,info){
 		this.plog(' [-'+type+'-]  '+info);
+	},
+	contain:function(str,c){
+		if(str.indexOf(c) >= 0 ){
+			return true;
+		}
+		return false;
+	},
+	orientationChange:function(){
+		switch(window.orientation){
+		case 0:
+			alert("肖像模式 0,screen-width: " + screen.width + "; screen-height:" + screen.height);
+			break;
+		case -90:
+			alert("左旋 -90,screen-width: " + screen.width + "; screen-height:" + screen.height);
+			break;
+		case 90:  
+			alert("右旋 90,screen-width: " + screen.width + "; screen-height:" + screen.height);
+			break;
+		case 180:  
+			alert("风景模式 180,screen-width: " + screen.width + "; screen-height:" + screen.height);break;
+		}
 	},
 	_initIndicators: function () {
 		var interactive = this.options.interactiveScrollbars,
