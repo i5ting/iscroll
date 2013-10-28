@@ -565,7 +565,12 @@ IScroll.prototype = {
 			this.scrollerStyle.top = y + 'px';
 		}
 
-		this.plog('&&&& this.x ='+	this.x + ' and x='+	x);
+		if(this.options.type == 'carousel'){
+			this.plog('&&&& this.x ='+	this.x + ' and x='+	x);	
+			
+			var a = x/this.wrapper.style.width;
+			this.plog('count='+a);
+		}	
 
 		this.x = x;
 		this.y = y;
