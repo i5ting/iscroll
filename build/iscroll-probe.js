@@ -262,13 +262,24 @@ function IScroll (el, options) {
 
 		HWCompositing: true,
 		useTransition: true,
-		useTransform: true
+		useTransform: true,
+		item_width: '90%',//new add
+		wrapper_width: '100%', //new add
 	};
 
 	for ( var i in options ) {
 		this.options[i] = options[i];
 	}
 
+	if(this.options.item_width != '90%'){
+		for(var o = 0;o < this.wrapper.getElementsByTagName('li').length;o++){
+			this.plog(o);
+			this.plog(this.wrapper.getElementsByTagName('li')[o]);
+			this.plog(this.options.item_width);
+			this.wrapper.getElementsByTagName('li')[o].style.width = this.options.item_width;
+		}
+	}
+		
 	// Normalize options
 	this.translateZ = this.options.HWCompositing && utils.hasPerspective ? ' translateZ(0)' : '';
 
@@ -873,7 +884,14 @@ IScroll.prototype = {
 
 		return { x: x, y: y };
 	},
-
+	plog:function(info){
+		if (window.console && window.console.log){  
+			window.console.log('LOG: ' + info ); 
+		}
+	},
+	pp:function(type,info){
+		this.plog(' [-'+type+'-]  '+info);
+	},
 	_initIndicators: function () {
 		var interactive = this.options.interactiveScrollbars,
 			defaultScrollbars = typeof this.options.scrollbars != 'object',

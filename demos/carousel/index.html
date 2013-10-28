@@ -7,6 +7,7 @@
 <title>iScroll demo: carousel</title>
 
 <script type="text/javascript" src="../../build/iscroll.js"></script>
+<!-- <script type="text/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script> -->
 
 <script type="text/javascript">
 
@@ -23,7 +24,8 @@ function loaded () {
 		indicators: {
 			el: document.getElementById('indicator'),
 			resize: false
-		}
+		},
+		item_width:'200px'
 	});
 }
 
@@ -92,11 +94,7 @@ body {
 	background-color: #444;
 }
 
-.slide {
-	width: 200px;
-	height: 240px;
-	float: left;
-}
+
 
 .painting {
 	width: 140px;
@@ -142,6 +140,16 @@ body {
 	background: #777;
 }
 
+ul{
+	list-style:none;
+}
+
+li {
+/*	width: 200px;*/
+	height: 240px;
+	float: left;
+}
+
 </style>
 </head>
 <body onload="loaded()">
@@ -149,18 +157,20 @@ body {
 <div id="viewport">
 	<div id="wrapper">
 		<div id="scroller">
-			<div class="slide">
-				<div class="painting giotto"></div>
-			</div>
-			<div class="slide">
-				<div class="painting leonardo"></div>
-			</div>
-			<div class="slide">
-				<div class="painting gaugin"></div>
-			</div>
-			<div class="slide">
-				<div class="painting warhol"></div>
-			</div>
+			<ul>
+				<li>
+					<div class="painting giotto"></div>
+				</li>
+				<li>
+					<div class="painting leonardo"></div>
+				</li>
+				<li>
+					<div class="painting gaugin"></div>
+				</li>
+				<li>
+					<div class="painting warhol"></div>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>
