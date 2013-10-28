@@ -257,7 +257,8 @@ function IScroll (el, options) {
 		HWCompositing: true,
 		useTransition: true,
 		useTransform: true,
-		item_width: '90%',//new add
+		item_width: '100%',//new add
+		type:'',
 		wrapper_width: '100%', //new add
 		debug:true,
 	};
@@ -272,7 +273,8 @@ function IScroll (el, options) {
 		return;
 	}
 	
-	if(this.options.item_width != '90%'){
+
+	if(this.options.item_width != '100%'){
 		for(var o = 0;o < this.wrapper.getElementsByTagName('li').length;o++){
 			this.plog(o);
 			this.plog(this.wrapper.getElementsByTagName('li')[o]);
@@ -287,15 +289,17 @@ function IScroll (el, options) {
 		this.wrapper.style.width = this.options.item_width;
 	}
 	
-	this.scroller.style.width = parseInt(this.options.item_width)*this.wrapper.getElementsByTagName('li').length+'px';
+	if(this.options.type == 'carousel'){
+			this.scroller.style.width = parseInt(this.options.item_width)*this.wrapper.getElementsByTagName('li').length+'px';
+			
+			if(this.options.debug){
+				this.plog(this.wrapper.innerHTML);
 	
-	if(this.options.debug){
-		this.plog(this.wrapper.innerHTML);
-	
-		this.plog('this.wrapper.style.width = ' + this.wrapper.style.width);
-		this.plog('this.scroller.style.width = '+ this.scroller.style.width);
-		this.plog('this.ul>li.length = '        + this.wrapper.getElementsByTagName('li').length);
-		this.plog('this.ul>li.style.width = '   + this.wrapper.getElementsByTagName('li')[0].style.width);	
+				this.plog('this.wrapper.style.width = ' + this.wrapper.style.width);
+				this.plog('this.scroller.style.width = '+ this.scroller.style.width);
+				this.plog('this.ul>li.length = '        + this.wrapper.getElementsByTagName('li').length);
+				this.plog('this.ul>li.style.width = '   + this.wrapper.getElementsByTagName('li')[0].style.width);	
+			}
 	}
 	// Normalize options
 	this.translateZ = this.options.HWCompositing && utils.hasPerspective ? ' translateZ(0)' : '';
