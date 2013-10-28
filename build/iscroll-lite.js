@@ -259,12 +259,19 @@ function IScroll (el, options) {
 		useTransform: true,
 		item_width: '90%',//new add
 		wrapper_width: '100%', //new add
+		debug:true,
 	};
 
 	for ( var i in options ) {
 		this.options[i] = options[i];
 	}
-
+	//new add  
+	
+	if(this.wrapper.getElementsByTagName('li').length === 0){	
+		this.plog('WARNING: wrapper>scroller>ul>li length is 0,please add li as item');
+		return;
+	}
+	
 	if(this.options.item_width != '90%'){
 		for(var o = 0;o < this.wrapper.getElementsByTagName('li').length;o++){
 			this.plog(o);
@@ -273,7 +280,23 @@ function IScroll (el, options) {
 			this.wrapper.getElementsByTagName('li')[o].style.width = this.options.item_width;
 		}
 	}
-		
+	
+	if(this.options.wrapper_width != '100%'){
+			this.wrapper.style.width = this.options.wrapper_width;
+	}else{
+		this.wrapper.style.width = this.options.item_width;
+	}
+	
+	this.scroller.style.width = parseInt(this.options.item_width)*this.wrapper.getElementsByTagName('li').length+'px';
+	
+	if(this.options.debug){
+		this.plog(this.wrapper.innerHTML);
+	
+		this.plog('this.wrapper.style.width = ' + this.wrapper.style.width);
+		this.plog('this.scroller.style.width = '+ this.scroller.style.width);
+		this.plog('this.ul>li.length = '        + this.wrapper.getElementsByTagName('li').length);
+		this.plog('this.ul>li.style.width = '   + this.wrapper.getElementsByTagName('li')[0].style.width);	
+	}
 	// Normalize options
 	this.translateZ = this.options.HWCompositing && utils.hasPerspective ? ' translateZ(0)' : '';
 
