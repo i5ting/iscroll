@@ -60,3 +60,5 @@ myScroll = new IScroll('#carousel_wrapper', {
 	}
 });
 ```
+
+横屏还有问题
