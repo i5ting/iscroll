@@ -28,6 +28,7 @@ function IScroll (el, options) {
 		type:'',
 		wrapper_width: '100%', //new add
 		debug:true,
+		on_page_changed:function(page){},
 	};
 
 	for ( var i in options ) {
@@ -567,9 +568,25 @@ IScroll.prototype = {
 
 		if(this.options.type == 'carousel'){
 			this.plog('&&&& this.x ='+	this.x + ' and x='+	x);	
-			
-			var a = x/this.wrapper.style.width;
+			var aw=1;
+			if(this.contain(this.options.item_width,'%')){
+				aw = parseInt(this.options.item_width)*window.screen.width*0.01;
+				//this.wrapper.getElementsByTagName('li')[o].style.width = aw + 'px';
+				// var aw = 100/this.wrapper.getElementsByTagName('li').length+ '%';
+				// this.wrapper.getElementsByTagName('li')[o].style.width = aw;	
+			}else{
+				aw = parseInt(this.options.item_width);
+			}
+			this.plog('w w='+aw);
+			var a = Math.abs(x/aw);
 			this.plog('count='+a);
+			
+			//正整数, then call on_page_changed
+			var r = /^[0-9]*[1-9][0-9]*$/;
+			if(r.test(a)){
+				this.plog('on_page_changed and page = '+a);
+				this.options.on_page_changed(a);
+			}
 		}	
 
 		this.x = x;
