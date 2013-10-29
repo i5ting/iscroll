@@ -820,7 +820,13 @@ IScroll.prototype = {
 				this.plog('on_page_changed and page = '+a);
 				this.options.on_page_changed(a);
 			}
+			
+			if(a === 0){
+				this.plog('on_page_changed and page = '+a);
+				this.options.on_page_changed(a);
+			}
 		}	
+		
 
 		this.x = x;
 		this.y = y;
