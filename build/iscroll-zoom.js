@@ -876,7 +876,8 @@ IScroll.prototype = {
 			this.plog('w w='+aw);
 			var a = Math.abs(x/aw);
 			this.plog('count='+a);
-			//正整数 
+			
+			//正整数, then call on_page_changed
 			var r = /^[0-9]*[1-9][0-9]*$/;
 			if(r.test(a)){
 				this.plog('on_page_changed and page = '+a);
